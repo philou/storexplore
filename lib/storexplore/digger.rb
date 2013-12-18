@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 #
-# version.rb
+# digger.rb
 #
 # Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
 #
@@ -20,5 +20,16 @@
 # MA 02110-1301  USA
 
 module Storexplore
-  VERSION = "0.0.1"
+  class Digger
+    def initialize(selector, factory)
+      @selector = selector
+      @factory = factory
+    end
+
+    def sub_walkers(page, father)
+      page.search_links(@selector).each_with_index.to_a.lazy.map do |link, i|
+        @factory.new(link, father, i)
+      end
+    end
+  end
 end

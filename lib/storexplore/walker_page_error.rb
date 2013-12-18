@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 #
-# version.rb
+# walker_page_error.rb
 #
 # Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
 #
@@ -20,5 +20,6 @@
 # MA 02110-1301  USA
 
 module Storexplore
-  VERSION = "0.0.1"
+  class WalkerPageError < StandardError
+  end
 end

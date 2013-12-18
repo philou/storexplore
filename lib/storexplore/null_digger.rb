@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 #
-# version.rb
+# null_digger.rb
 #
 # Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
 #
@@ -20,5 +20,11 @@
 # MA 02110-1301  USA
 
 module Storexplore
-  VERSION = "0.0.1"
+  class NullDigger
+    def sub_walkers(page, father)
+      []
+    end
+  end
 end
+
+

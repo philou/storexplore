@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 #
-# version.rb
+# api.rb
 #
 # Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
 #
@@ -20,5 +20,44 @@
 # MA 02110-1301  USA
 
 module Storexplore
-  VERSION = "0.0.1"
+
+  # Objects able to walk a store and discover available items
+  class Api
+
+    def self.browse(store_url)
+      builder(store_url).new(WalkerPage.open(store_url))
+    end
+
+    def self.register_builder(name, builder)
+      builders[name] = builder
+    end
+
+    # Uri of the main page of the store
+    # def uri
+
+    # Attributes of the page
+    # def attributes
+
+    # Walkers of the root categories of the store
+    # def categories
+
+    # Walkers of the root items in the store
+    # def items
+
+    private
+
+    def self.builder(store_url)
+      builders.each do |name, builder|
+        if store_url.include?(name)
+          return builder
+        end
+      end
+      raise NotImplementedError.new("Could not find a store item api for '#{store_url}'")
+    end
+
+    def self.builders
+      @builders ||= {}
+    end
+  end
+
 end
