@@ -19,3 +19,8 @@ vendor
 .yardoc
 _yardoc
 doc/
+
+# emacs files
+*~
+*#
+.#*
