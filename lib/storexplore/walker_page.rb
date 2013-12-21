@@ -37,12 +37,13 @@ end
 module Storexplore
 
   class WalkerPage
+    extend Forwardable
 
     def self.open(uri)
       Getter.new(uri)
     end
 
-    delegate :uri, :to => :@mechanize_page
+    def_delegator :@mechanize_page, :uri
 
     def search_links(selector)
       uri2links = {}
@@ -121,11 +122,13 @@ module Storexplore
     end
 
     class Link
+      extend Forwardable
+
       def initialize(mechanize_link)
         @mechanize_link = mechanize_link
       end
 
-      delegate :uri, :to => :@mechanize_link
+      def_delegator :@mechanize_link, :uri
 
       def get
         WalkerPage.new(@mechanize_link.click)
