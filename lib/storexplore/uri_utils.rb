@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 #
-# storexplore.rb
+# uri.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2011, 2013 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,14 +19,20 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require "storexplore/version"
-require "storexplore/api"
-require "storexplore/api_builder"
-require "storexplore/browsing_error"
-require "storexplore/digger"
-require "storexplore/null_digger"
-require "storexplore/uri_utils"
-require "storexplore/walker"
-require "storexplore/walker_page"
-require "storexplore/walker_page_error"
 
+module Storexplore
+
+  # Extra URI utilities
+  class UriUtils
+
+    # extracts the domain from an uri
+    def self.domain(uri)
+
+      return "localhost" if uri.scheme == "file"
+      return nil if uri.host.nil?
+      return nil if uri.host =~ /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/
+
+      /([^\.]+\.[^\.]+)$/.match(uri.host)[0]
+    end
+  end
+end

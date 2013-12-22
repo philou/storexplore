@@ -77,7 +77,7 @@ module Storexplore
     end
 
     def same_domain?(source_uri, target_uri)
-      target_uri.relative? || (source_uri.domain == target_uri.domain)
+      target_uri.relative? || (UriUtils.domain(source_uri) == UriUtils.domain(target_uri))
     end
 
     def search_all_links(selector)
