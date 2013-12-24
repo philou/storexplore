@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 #
-# storexplore.rb
+# hash_utils.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2012, 2013 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,6 +19,38 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require 'storexplore'
-require 'storexplore/testing/dummy_store'
-require 'storexplore/testing/dummy_store_generator'
+require "fileutils"
+
+module Storexplore
+
+  class HashUtils
+
+    def self.contains?(hash,other)
+      other.all? do |key, value|
+        hash.include?(key) && hash[key] == value
+      end
+    end
+
+    def self.without(hash,keys)
+      hash.reject do |key, value|
+        keys.include?(key)
+      end
+    end
+
+    def self.stringify_keys(hash)
+      result = {}
+      hash.each do |key, value|
+        result[key.to_s] = value
+      end
+      result
+    end
+
+    def self.internalize_keys(hash)
+      result = {}
+      hash.each do |key, value|
+        result[key.intern] = value
+      end
+      result
+    end
+  end
+end

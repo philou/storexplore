@@ -20,10 +20,12 @@
 # MA 02110-1301  USA
 
 require "storexplore/version"
+require "storexplore/array_utils"
 require "storexplore/api"
 require "storexplore/api_builder"
 require "storexplore/browsing_error"
 require "storexplore/digger"
+require "storexplore/hash_utils"
 require "storexplore/null_digger"
 require "storexplore/uri_utils"
 require "storexplore/walker"

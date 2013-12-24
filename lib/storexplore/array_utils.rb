@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 #
-# storexplore.rb
+# array_utils.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2012, 2013 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,6 +19,18 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require 'storexplore'
-require 'storexplore/testing/dummy_store'
-require 'storexplore/testing/dummy_store_generator'
+module Storexplore
+
+  class ArrayUtils
+
+    def self.contains?(array, other)
+      other.all? do |x|
+        array.include?(x)
+      end
+    end
+
+    def self.stringify(array)
+      array.map &:to_s
+    end
+  end
+end
