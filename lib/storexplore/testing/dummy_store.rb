@@ -26,15 +26,6 @@ module Storexplore
 
     class DummyStore
 
-      def self.root_dir
-        raise StandardError.new('You need to configure a dummy store generation root directory with Storexplore::Testing::DummyStore.configure_root_dir') if @root_dir.nil?
-        @root_dir
-      end
-
-      def self.configure_root_dir(root_dir)
-        @root_dir = root_dir
-      end
-
       def self.open(store_name)
         new(root_path(store_name), store_name)
       end
@@ -108,6 +99,10 @@ module Storexplore
       end
 
       private
+
+      def self.root_dir
+        Testing.config.dummy_store_root_dir
+      end
 
       def self.root_path(store_name)
         "#{root_dir}/#{store_name}/index.html"

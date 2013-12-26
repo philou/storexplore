@@ -20,5 +20,7 @@
 # MA 02110-1301  USA
 
 require 'storexplore'
+require 'storexplore/testing/api_shared_examples'
+require 'storexplore/testing/configuration'
 require 'storexplore/testing/dummy_store'
 require 'storexplore/testing/dummy_store_generator'
