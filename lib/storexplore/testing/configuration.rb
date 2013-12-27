@@ -37,14 +37,15 @@ module Storexplore
         @logger.level = Logger::INFO
       end
 
-      # Root directory where the dummy stores will be generated.
-      # All the content of this directory will be deleted when the DummyStore.wipeout method is called
-      def dummy_store_root_dir
-        raise StandardError.new('You need to configure a dummy store generation root directory with Storexplore::Testing::DummyStore.configure_root_dir') if @root_dir.nil?
-        @root_dir
+      # Generation directory where the dummy stores will be generated.
+      # A sub folder with name DummyStore::NAME will be created there to hold all generated dummy stores,
+      # the content of this directory will be deleted when the DummyStore.wipeout method is called
+      def dummy_store_generation_dir
+        raise StandardError.new('You need to configure a dummy store generation directory with Storexplore::Testing.config.dummy_store_generation_dir=') if @generation_dir.nil?
+        @generation_dir
       end
-      def dummy_store_root_dir=(root_dir)
-        @root_dir = root_dir
+      def dummy_store_generation_dir=(generation_dir)
+        @generation_dir = generation_dir
       end
 
       # Logger for custom test messages

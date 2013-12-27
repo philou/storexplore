@@ -26,6 +26,8 @@ module Storexplore
 
     class DummyStore
 
+      NAME = 'dummy-store'
+
       def self.open(store_name)
         new(root_path(store_name), store_name)
       end
@@ -101,7 +103,7 @@ module Storexplore
       private
 
       def self.root_dir
-        Testing.config.dummy_store_root_dir
+        File.join(Testing.config.dummy_store_generation_dir, NAME)
       end
 
       def self.root_path(store_name)
@@ -143,7 +145,7 @@ module Storexplore
       end
       def remove(wrong_categories, wrong_items, wrong_attributes)
         name, categories, items, attributes = read
-        write(name, categories - wrong_categories, items - wrong_items, attributes.without(wrong_attributes))
+        write(name, categories - wrong_categories, items - wrong_items, HashUtils.without(attributes,wrong_attributes))
       end
 
       def write(name, categories, items, attributes)
