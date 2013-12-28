@@ -19,10 +19,12 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
+require_relative 'dummy_store_constants'
+
 module Storexplore
   module Testing
 
-    Storexplore::define_api DummyStore::NAME do
+    Storexplore::define_api DummyStoreConstants::NAME do
 
       categories 'a.category' do
         attributes do

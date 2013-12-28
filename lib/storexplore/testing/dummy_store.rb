@@ -26,8 +26,6 @@ module Storexplore
 
     class DummyStore
 
-      NAME = 'dummy-store'
-
       def self.open(store_name)
         new(root_path(store_name), store_name)
       end
@@ -103,7 +101,7 @@ module Storexplore
       private
 
       def self.root_dir
-        File.join(Testing.config.dummy_store_generation_dir, NAME)
+        File.join(Testing.config.dummy_store_generation_dir, DummyStoreConstants::NAME)
       end
 
       def self.root_path(store_name)
