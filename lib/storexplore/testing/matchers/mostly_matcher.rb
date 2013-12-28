@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 #
-# storexplore.rb
+# mostly_matcher.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2010, 2012, 2013 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,12 +19,27 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require 'storexplore'
-require 'storexplore/testing/api_shared_examples'
-require 'storexplore/testing/configuration'
-require 'storexplore/testing/dummy_data'
-require 'storexplore/testing/dummy_store'
-require 'storexplore/testing/dummy_store_api'
-require 'storexplore/testing/dummy_store_generator'
-require 'storexplore/testing/matchers/have_unique_matcher'
-require 'storexplore/testing/matchers/mostly_matcher'
+# Matcher to verify that most items match something else
+RSpec::Matchers.define :mostly do |item_matcher|
+
+  match do |actual_items|
+    expected_uniques_count(actual_items) <= actual_matches(actual_items, item_matcher).length
+  end
+  description do
+    "#{item_matcher.description} to be true for at least #{threshold*100}% of the items"
+  end
+
+  #private
+
+  def expected_uniques_count(actual_items)
+    (actual_items.length * threshold).round
+  end
+  def actual_matches(actual_items, item_matcher)
+    actual_items.find_all {|item| item_matcher.matches?(item)}
+  end
+
+  def threshold
+    0.7
+  end
+
+end
