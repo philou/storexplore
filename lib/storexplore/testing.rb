@@ -22,6 +22,7 @@
 require 'storexplore'
 require 'storexplore/testing/api_shared_examples'
 require 'storexplore/testing/configuration'
+require 'storexplore/testing/dummy_data'
 require 'storexplore/testing/dummy_store'
 require 'storexplore/testing/dummy_store_api'
 require 'storexplore/testing/dummy_store_generator'

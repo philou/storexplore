@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# dummy_store_generator.rb
+# dummy_data.rb
 #
 # Copyright (c) 2012, 2013 by Philippe Bourgau. All rights reserved.
 #
@@ -22,44 +22,46 @@
 module Storexplore
   module Testing
 
-    class DummyStoreGenerator
-      def initialize(pages, count = 1)
-        @pages = pages
-        @count = count
+    class DummyData
+
+      def self.name(kind)
+        "#{kind.capitalize}-#{new_int}"
       end
 
-      def and(count)
-        @count = count
-        self
-      end
-
-      def categories
-        dispatch(:category)
-      end
-      alias_method :category, :categories
-
-      def items
-        dispatch(:item).attributes
-      end
-      alias_method :item, :items
-
-      def attributes(options = {})
-        @pages.map do |page|
-          attributes = DummyData.attributes(page.name)
-          page.attributes(HashUtils.without(attributes, [:name]))
-        end
+      def self.attributes(name)
+        {
+          name: name,
+          brand: brand(name),
+          image: image(name),
+          remote_id: remote_id,
+          price: price(name)
+        }
       end
 
       private
 
-      def dispatch(message)
-        sub_pages = @pages.map do |page|
-          @count.times.map do
-            page.send(message, DummyData.name(message))
-          end
-        end
-        DummyStoreGenerator.new(sub_pages.flatten)
+      def self.brand(name)
+        "#{name} Inc."
+      end
+      def self.image(name)
+        "http://www.photofabric.com/#{name}"
+      end
+      def self.remote_id
+        new_int.to_s
+      end
+      def self.price(name)
+        hash = name.hash.abs
+        digits = Math.log(hash, 10).round
+        (hash/10.0**(digits-2)).round(2)
+      end
+
+      def self.new_int
+        @last_int ||= 0
+        result = @last_int
+        @last_int = @last_int + 1
+        result
       end
     end
+
   end
 end
