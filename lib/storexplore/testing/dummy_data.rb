@@ -28,14 +28,14 @@ module Storexplore
         "#{kind.capitalize}-#{new_int}"
       end
 
-      def self.attributes(name)
+      def self.attributes(name, options)
         {
           name: name,
           brand: brand(name),
           image: image(name),
           remote_id: remote_id,
           price: price(name)
-        }
+        }.merge(options)
       end
 
       private

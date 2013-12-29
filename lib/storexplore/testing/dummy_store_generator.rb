@@ -45,7 +45,7 @@ module Storexplore
 
       def attributes(options = {})
         @pages.map do |page|
-          attributes = DummyData.attributes(page.name)
+          attributes = DummyData.attributes(page.name, options)
           page.attributes(HashUtils.without(attributes, [:name]))
         end
       end
