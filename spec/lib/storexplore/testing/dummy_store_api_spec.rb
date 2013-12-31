@@ -59,12 +59,14 @@ module Storexplore
       end
 
       it "should use constant memory" do
-        warm_up_measure = memory_usage_for_items(1)
+        FEW = 1
+        MANY = 100
 
-        small_inputs_memory = memory_usage_for_items(1)
-        large_inputs_memory = memory_usage_for_items(200)
+        warm_up_measure = memory_usage_for_items(FEW)
+        few_inputs_memory = memory_usage_for_items(FEW)
+        many_inputs_memory = memory_usage_for_items(MANY)
 
-        expect(large_inputs_memory).to be <= small_inputs_memory * 1.25
+        expect(many_inputs_memory).to be <= few_inputs_memory * 1.25
       end
 
       def memory_usage_for_items(item_count)
@@ -95,25 +97,30 @@ module Storexplore
       end
 
       def current_living_objects
-        GC.start
         object_counts = ObjectSpace.count_objects
         object_counts[:TOTAL] - object_counts[:FREE]
       end
 
       def walk_store(store_name)
         new_store(store_name).categories.each do |category|
-          @title = category.title
-          @attributes = category.attributes
+          register(category)
+
           category.categories.each do |sub_category|
-            @title = sub_category.title
-            @attributes = sub_category.attributes
-            category.items.each do |item|
-              @title = item.title
-              @attributes = item.attributes
+            register(sub_category)
+
+            sub_category.items.each do |item|
+              register(item)
             end
           end
         end
       end
+
+      def register(store_node)
+        @title = store_node.title
+        @attributes = store_node.attributes
+        GC.start
+      end
+
     end
 
   end
