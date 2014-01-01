@@ -59,8 +59,8 @@ module Storexplore
       end
 
       it "should use constant memory" do
-        FEW = 1
-        MANY = 100
+        FEW = 10
+        MANY = 200
 
         warm_up_measure = memory_usage_for_items(FEW)
         few_inputs_memory = memory_usage_for_items(FEW)
@@ -118,7 +118,12 @@ module Storexplore
       def register(store_node)
         @title = store_node.title
         @attributes = store_node.attributes
-        GC.start
+
+        # No GC is explicitly done, because:
+        #  - large inputs forces it anyway
+        #  - it greatly slows tests
+        #  - GCing should not change the complexity of the system
+        # GC.start
       end
 
     end
