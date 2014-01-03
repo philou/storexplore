@@ -4,6 +4,9 @@ A declarative scrapping DSL that lets one define directory like apis to an onlin
 
 ## Installation
 
+In order to be able to enumerate all items of a store in constant memory,
+Storexplore requires ruby 2.0 for its lazy enumerators
+
 Add this line to your application's Gemfile:
 
     gem 'storexplore'
