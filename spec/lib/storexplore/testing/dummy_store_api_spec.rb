@@ -59,20 +59,22 @@ module Storexplore
       end
 
       it "should use constant memory" do
-        FEW = 10
-        MANY = 200
+        FEW = 1
+        MANY = 100
+        RUNS = 2
 
-        warm_up_measure = memory_usage_for_items(FEW)
-        few_inputs_memory = memory_usage_for_items(FEW)
-        many_inputs_memory = memory_usage_for_items(MANY)
+        many_inputs_memory = memory_usage_for_items(MANY, RUNS).min
+        few_inputs_memory = memory_usage_for_items(FEW, RUNS).max
 
         expect(many_inputs_memory).to be <= few_inputs_memory * 1.25
       end
 
-      def memory_usage_for_items(item_count)
+      def memory_usage_for_items(item_count, runs)
         generate_store(store_name = "www.spec-perf-store.com", item_count)
-        memory_peak_of do
-          walk_store(store_name)
+        runs.times.map do
+          memory_peak_of do
+            walk_store(store_name)
+          end
         end
       end
 
