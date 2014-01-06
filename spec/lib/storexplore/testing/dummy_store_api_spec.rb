@@ -59,23 +59,26 @@ module Storexplore
       end
 
       it "should use constant memory" do
-        FEW = 1
+        FEW = 10
         MANY = 100
         RUNS = 2
 
-        many_inputs_memory = memory_usage_for_items(MANY, RUNS).min
-        few_inputs_memory = memory_usage_for_items(FEW, RUNS).max
+        many_inputs_memory = memory_usage_for_items(MANY, RUNS)
+        few_inputs_memory = memory_usage_for_items(FEW, RUNS)
 
-        expect(many_inputs_memory).to be <= few_inputs_memory * 1.25
+        slope = (many_inputs_memory - few_inputs_memory) / (MANY - FEW)
+
+        expect(slope).to be_within(few_inputs_memory * 0.05).of(0.0)
       end
 
       def memory_usage_for_items(item_count, runs)
         generate_store(store_name = "www.spec-perf-store.com", item_count)
-        runs.times.map do
+        data = runs.times.map do
           memory_peak_of do
             walk_store(store_name)
           end
         end
+        mean(data)
       end
 
       def memory_peak_of
@@ -128,6 +131,9 @@ module Storexplore
         # GC.start
       end
 
+      def mean(data)
+        data.reduce(:+)/data.size
+      end
     end
 
   end
