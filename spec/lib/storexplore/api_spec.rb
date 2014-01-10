@@ -2,7 +2,7 @@
 #
 # api_spec.rb
 #
-# Copyright (C) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (C) 2010, 2011, 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -25,19 +25,26 @@ module Storexplore
 
   describe Api do
 
-    before :each do
-      Api.register_builder(my_store = "www.my-store.com", builder = double(ApiBuilder.class))
-      @url = "http://#{my_store}"
-      WalkerPage.stub(:open).with(@url).and_return(walker = double(WalkerPage))
-      builder.stub(:new).with(walker).and_return(@store_api = double(ApiBuilder))
+    before :all do
+      Storexplore::Api.define 'cats' do
+        attributes do
+          {animal: :cats}
+        end
+      end
     end
 
     it "select the good store items api builder to browse a store" do
-      expect(Api.browse(@url)).to eq @store_api
+      expect(Api.browse("http://www.cats.net").attributes[:animal]).to eq(:cats)
     end
 
     it "fails when it does not know how to browse a store" do
       expect(lambda { Api.browse("http://unknown.store.com") }).to raise_error(NotImplementedError)
+    end
+
+    it "allows to unregister an installed api (mostly for testing)" do
+      Api.undef 'cats'
+
+      expect(lambda { Api.browse("http://www.cats.com") }).to raise_error(NotImplementedError)
     end
 
   end

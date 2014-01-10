@@ -2,7 +2,7 @@
 #
 # api.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2010, 2011, 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,18 @@ module Storexplore
   # Objects able to walk a store and discover available items
   class Api
 
+    def self.define(name, &block)
+      builder = ApiBuilder.define(Walker, Digger, &block)
+
+      register_builder(name, builder)
+    end
+
     def self.browse(store_url)
       builder(store_url).new(WalkerPage.open(store_url))
     end
 
-    def self.register_builder(name, builder)
-      builders[name] = builder
+    def self.undef(name)
+      builders.delete(name)
     end
 
     # Uri of the main page of the store
@@ -45,6 +51,10 @@ module Storexplore
     # def items
 
     private
+
+    def self.register_builder(name, builder)
+      builders[name] = builder
+    end
 
     def self.builder(store_url)
       builders.each do |name, builder|

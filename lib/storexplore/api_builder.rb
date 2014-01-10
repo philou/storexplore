@@ -2,7 +2,7 @@
 #
 # api_builder.rb
 #
-# Copyright (c) 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2011, 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -60,9 +60,4 @@ module Storexplore
     end
   end
 
-  def self.define_api(name, &block)
-    builder = ApiBuilder.define(Walker, Digger, &block)
-
-    Api.register_builder(name, builder)
-  end
 end
