@@ -2,7 +2,7 @@
 #
 # spec_helper.rb
 #
-# Copyright (c) 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2013, 2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,10 +19,20 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
+require 'fakeweb'
 require 'spec_combos'
 require 'storexplore'
 require 'storexplore/testing'
 
+# Dummy store generation
 Storexplore::Testing.config do |config|
   config.dummy_store_generation_dir= File.join(File.dirname(__FILE__), '../tmp')
+end
+
+# Clean up fakeweb registry after every test
+FakeWeb.allow_net_connect = false
+RSpec.configure do |config|
+  config.after(:each) do
+    FakeWeb.clean_registry
+  end
 end

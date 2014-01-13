@@ -32,7 +32,7 @@ module Storexplore
     def initialize(api_class, digger_class)
       @api_class = api_class
       @digger_class = digger_class
-      @scrap_attributes_block = lambda do {} end
+      @scrap_attributes_block = lambda do |_| {} end
       @categories_digger = NullDigger.new
       @items_digger = NullDigger.new
     end
