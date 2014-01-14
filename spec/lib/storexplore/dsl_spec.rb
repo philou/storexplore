@@ -23,7 +23,7 @@ require "spec_helper"
 
 module Storexplore
 
-  describe 'Dsl' do
+  describe Dsl do
 
     def browse
       @walker = Storexplore::Api.browse("http://www.cats-surplus.com")

@@ -25,7 +25,7 @@ module Storexplore
   class Api
 
     def self.define(name, &block)
-      builder = ApiBuilder.define(Walker, Digger, &block)
+      builder = Dsl.define(Walker, Digger, &block)
 
       register_builder(name, builder)
     end

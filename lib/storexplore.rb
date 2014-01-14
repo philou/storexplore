@@ -2,7 +2,7 @@
 #
 # storexplore.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2010, 2011, 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,9 +22,9 @@
 require "storexplore/version"
 require "storexplore/array_utils"
 require "storexplore/api"
-require "storexplore/api_builder"
 require "storexplore/browsing_error"
 require "storexplore/digger"
+require "storexplore/dsl"
 require "storexplore/hash_utils"
 require "storexplore/null_digger"
 require "storexplore/uri_utils"

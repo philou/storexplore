@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 #
-# api_builder.rb
+# dsl.rb
 #
 # Copyright (c) 2011, 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
 #
@@ -21,7 +21,7 @@
 
 module Storexplore
 
-  class ApiBuilder
+  class Dsl
 
     def self.define(api_class, digger_class, &block)
       new(api_class, digger_class).tap do |result|
@@ -42,11 +42,11 @@ module Storexplore
     end
 
     def categories(selector, &block)
-      @categories_digger = @digger_class.new(selector, ApiBuilder.define(@api_class, @digger_class, &block))
+      @categories_digger = @digger_class.new(selector, Dsl.define(@api_class, @digger_class, &block))
     end
 
     def items(selector, &block)
-      @items_digger = @digger_class.new(selector, ApiBuilder.define(@api_class, @digger_class, &block))
+      @items_digger = @digger_class.new(selector, Dsl.define(@api_class, @digger_class, &block))
     end
 
     def new(page_getter, father = nil, index = nil)
