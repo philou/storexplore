@@ -2,7 +2,7 @@
 #
 # dummy_store_api_spec.rb
 #
-# Copyright (c) 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2011, 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -68,7 +68,9 @@ module Storexplore
 
         slope = (many_inputs_memory - few_inputs_memory) / (MANY - FEW)
 
-        expect(slope).to be_within(few_inputs_memory * 0.05).of(0.0)
+        zero_inputs_memory = few_inputs_memory - FEW * slope
+
+        expect(slope).to be_within(zero_inputs_memory * 0.05).of(0.0)
       end
 
       def memory_usage_for_items(item_count, runs)
