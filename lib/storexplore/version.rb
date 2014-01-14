@@ -2,7 +2,7 @@
 #
 # version.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2010, 2011, 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -20,5 +20,5 @@
 # MA 02110-1301  USA
 
 module Storexplore
-  VERSION = "0.0.2"
+  VERSION = "0.1.0"
 end
