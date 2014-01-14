@@ -82,6 +82,9 @@ module Storexplore
             categories 'a.sub-category' do
             end
             items 'a.item' do
+              attributes do
+                raise WalkerPageError.new("Dummy error message")
+              end
             end
             attributes do
               { page: page,
@@ -159,6 +162,10 @@ module Storexplore
           genealogy = @sub_walker.genealogy.split("\n")
 
           expect(genealogy).to eq [@walker.to_s, @walker.categories.first.to_s, @sub_walker.to_s]
+        end
+
+        it "wraps parsing errors with debug errors" do
+          expect(lambda { @sub_walker.attributes }).to raise_error(BrowsingError, "Dummy error message\n#{@sub_walker.genealogy}")
         end
       end
 
