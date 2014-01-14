@@ -25,13 +25,13 @@ module Storexplore
   class Api
 
     def self.define(name, &block)
-      builder = Dsl.define(Walker, Digger, &block)
+      builder = Dsl.walker_builder(&block)
 
       register_builder(name, builder)
     end
 
     def self.browse(store_url)
-      builder(store_url).new(WalkerPage.open(store_url))
+      builder(store_url).new_walker(WalkerPage.open(store_url))
     end
 
     def self.undef(name)

@@ -23,15 +23,13 @@ module Storexplore
 
   class Dsl
 
-    def self.define(api_class, digger_class, &block)
-      new(api_class, digger_class).tap do |result|
-        result.instance_eval(&block)
+    def self.walker_builder(&block)
+      new.tap do |dsl|
+        dsl.instance_eval(&block)
       end
     end
 
-    def initialize(api_class, digger_class)
-      @api_class = api_class
-      @digger_class = digger_class
+    def initialize()
       @scrap_attributes_block = lambda do |_| {} end
       @categories_digger = NullDigger.new
       @items_digger = NullDigger.new
@@ -42,20 +40,20 @@ module Storexplore
     end
 
     def categories(selector, &block)
-      @categories_digger = @digger_class.new(selector, Dsl.define(@api_class, @digger_class, &block))
+      @categories_digger = Digger.new(selector, Dsl.walker_builder(&block))
     end
 
     def items(selector, &block)
-      @items_digger = @digger_class.new(selector, Dsl.define(@api_class, @digger_class, &block))
+      @items_digger = Digger.new(selector, Dsl.walker_builder(&block))
     end
 
-    def new(page_getter, father = nil, index = nil)
-      @api_class.new(page_getter).tap do |result|
-        result.categories_digger = @categories_digger
-        result.items_digger = @items_digger
-        result.scrap_attributes_block = @scrap_attributes_block
-        result.father = father
-        result.index = index
+    def new_walker(page_getter, father = nil, index = nil)
+      Walker.new(page_getter).tap do |walker|
+        walker.categories_digger = @categories_digger
+        walker.items_digger = @items_digger
+        walker.scrap_attributes_block = @scrap_attributes_block
+        walker.father = father
+        walker.index = index
       end
     end
   end

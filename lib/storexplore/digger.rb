@@ -2,7 +2,7 @@
 #
 # digger.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2010, 2011, 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -21,14 +21,14 @@
 
 module Storexplore
   class Digger
-    def initialize(selector, factory)
+    def initialize(selector, sub_walker_builder)
       @selector = selector
-      @factory = factory
+      @sub_walker_builder = sub_walker_builder
     end
 
     def sub_walkers(page, father)
       page.search_links(@selector).each_with_index.to_a.lazy.map do |link, i|
-        @factory.new(link, father, i)
+        @sub_walker_builder.new_walker(link, father, i)
       end
     end
   end
