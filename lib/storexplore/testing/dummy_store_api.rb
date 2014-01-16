@@ -2,7 +2,7 @@
 #
 # dummy_store_api.rb
 #
-# Copyright (c) 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2012-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -24,6 +24,9 @@ require_relative 'dummy_store_constants'
 module Storexplore
   module Testing
 
+    # API definition for stores generated Storexplore::DummyStore
+    # This file can be included on its own, without storexplore/testing.rb and
+    # without the need for all the runtime testing dependencies (rspec, etc).
     Storexplore::Api.define DummyStoreConstants::NAME do
 
       categories 'a.category' do

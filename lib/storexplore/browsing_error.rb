@@ -2,7 +2,7 @@
 #
 # browsing_error.rh
 #
-# Copyright (c) 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2011-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,8 @@
 # MA 02110-1301  USA
 
 module Storexplore
-  # Error thrown when store item browsing fails due to unexpected page formatting
+  # Exception thrown by Storexplore::Walker when store item browsing fails due
+  # to unexpected page formatting
   class BrowsingError < StandardError
   end
 end

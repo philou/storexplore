@@ -2,7 +2,7 @@
 #
 # dummy_store.rb
 #
-# Copyright (c) 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2012-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -24,76 +24,102 @@ require "fileutils"
 module Storexplore
   module Testing
 
+    # Read / Write model for a disk html store page. Every modification is
+    # directly saved to the disk, nothing remains in memory.
+    # All stores are generated in a specific subdirectory of
+    # Storexplore::Testing::Configuration #dummy_store_generation_dir /
+    # Storexplore::Testing::DummyStoreConstants #NAME
     class DummyStore
 
+      # Initializes or opens a dummy store in the 'store_name' subdirectory
       def self.open(store_name)
         new(root_path(store_name), store_name)
       end
 
+      # file:// uri for the place where the 'store_name' store would be
+      # created
       def self.uri(store_name)
         "file://#{root_path(store_name)}"
       end
 
+      # Deletes from disk all generated dummy stores
       def self.wipe_out
         FileUtils.rm_rf(root_dir)
       end
+      # Deletes from disk the 'store_name' dummy store
       def self.wipe_out_store(store_name)
         FileUtils.rm_rf(root_path(store_name))
       end
 
+      # file:// uri of the page
       def uri
         "file://#{@path}"
       end
 
+      # Name of the page
       attr_reader :name
 
+      # Child Storexplore::Testing::DummyStore instances for existing sub
+      # categories
       def categories
         _name, categories, _items, _attributes = read
         categories.map do |category_name|
           DummyStore.new("#{absolute_category_dir(category_name)}/index.html", category_name)
         end
       end
+      # Child category Storexplore::Testing::DummyStore instance with the
+      # specified name. Creates it if it does not yet exist
       def category(category_name)
         short_category_name = short_name(category_name)
         add([short_category_name], [], {})
         DummyStore.new("#{absolute_category_dir(short_category_name)}/index.html", category_name)
       end
+      # Deletes the specified child category.
       def remove_category(category_name)
         short_category_name = short_name(category_name)
         remove([short_category_name], [], [])
         FileUtils.rm_rf(absolute_category_dir(short_category_name))
       end
 
+      # Child Storexplore::Testing::DummyStore instances for existing sub
+      # items
       def items
         _name, _categories, items, _attributes = read
         items.map do |item_name|
           DummyStore.new(absolute_item_file(item_name), item_name)
         end
       end
+      # Child item Storexplore::Testing::DummyStore instance with the
+      # specified name. Creates it if it does not yet exist
       def item(item_name)
         short_item_name = short_name(item_name)
         add([], [short_item_name], {})
         DummyStore.new(absolute_item_file(short_item_name), item_name)
       end
+      # Deletes the specified child item.
       def remove_item(item_name)
         short_item_name = short_name(item_name)
         remove([], [short_item_name], [])
         FileUtils.rm_rf(absolute_item_file(short_item_name))
       end
 
+      # Hash of the current attributes
       def attributes(*args)
         return add_attributes(args[0]) if args.size == 1
 
         _name, _categories, _items, attributes = read
         HashUtils.internalize_keys(attributes)
       end
+      # Adds the specified attributes
       def add_attributes(values)
         add([], [], HashUtils.stringify_keys(values))
       end
+      # Removes the specified attriutes
       def remove_attributes(*attribute_names)
         remove([], [], ArrayUtils.stringify(attribute_names))
       end
 
+      # New Storexplore::Testing::DummyStoreGenerator instance for this
       def generate(count = 1)
         DummyStoreGenerator.new([self], count)
       end

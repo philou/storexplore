@@ -2,7 +2,7 @@
 #
 # api.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2010-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -21,34 +21,30 @@
 
 module Storexplore
 
-  # Objects able to walk a store and discover available items
+  # Main entry point to the library
   class Api
 
+    # Defines a new store API, with a name and a definition inside the given
+    # block. The block is evaluated in the context of a Storexplore::Dsl
+    # instance, see README
     def self.define(name, &block)
       builder = Dsl.walker_builder(&block)
 
       register_builder(name, builder)
     end
 
+    # Starts to browse a real store. Uses the first defined API whose name is
+    # included in the url of the store.
+    # Returns a Storexplore::Walker for the home page of the store
     def self.browse(store_url)
       builder(store_url).new_walker(WalkerPage.open(store_url))
     end
 
+    # Forgets the previously defined store API by its name. Mainly useful while
+    # testing.
     def self.undef(name)
       builders.delete(name)
     end
-
-    # Uri of the main page of the store
-    # def uri
-
-    # Attributes of the page
-    # def attributes
-
-    # Walkers of the root categories of the store
-    # def categories
-
-    # Walkers of the root items in the store
-    # def items
 
     private
 

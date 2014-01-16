@@ -2,7 +2,7 @@
 #
 # walker_page.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2010-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -23,15 +23,22 @@ require 'mechanize'
 
 module Storexplore
 
+  # Wrapper around Mechanize::Page providing strict one liners to select
+  # elements.
   class WalkerPage
     extend Forwardable
 
+    # A new lazy proxy on the page.
+    # (Internal Usage)
     def self.open(uri)
       Getter.new(uri)
     end
 
+    # Uri of the page
     def_delegator :@mechanize_page, :uri
 
+    # Collection of proxies on pages accessible through the matching links
+    # (Internal Usage)
     def search_links(selector)
       uri2links = {}
       search_all_links(selector).each do |link|
@@ -42,10 +49,14 @@ module Storexplore
       uri2links.values.sort_by {|link| link.uri.to_s }
     end
 
+    # Unique element matching selector
+    # Throws Storexplore::WalkerPageError if there is not exactly one matching
+    # element
     def get_one(selector)
       first_or_throw(@mechanize_page.search(selector), "elements", selector)
     end
 
+    # String with the text of all matching elements, separated by separator.
     def get_all(selector, separator)
       elements = @mechanize_page.search(selector)
       throw_if_empty(elements, "elements", selector)
@@ -53,6 +64,9 @@ module Storexplore
       (elements.map &:text).join(separator)
     end
 
+    # Unique image matching selector
+    # Throws Storexplore::WalkerPageError if there is not exactly one matching
+    # image
     def get_image(selector)
       first_or_throw(@mechanize_page.images_with(search: selector), "images", selector)
     end

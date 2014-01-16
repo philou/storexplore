@@ -2,7 +2,7 @@
 #
 # walker.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2010-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -21,8 +21,10 @@
 
 module Storexplore
 
+  # Objects representing categories and items of the store. These are the instances manipulated when browsing a previously defined store
   class Walker
 
+    # Internal usage
     attr_accessor :categories_digger, :items_digger, :scrap_attributes_block, :father, :index
 
     def initialize(getter)
@@ -32,30 +34,42 @@ module Storexplore
       @getter = getter
     end
 
+    # Early title, accessible before the page is loaded.
+    # * for the store root, this is the store uri
+    # * for other pages, it's the caption of the link that brought to this
     def title
       @getter.text
     end
 
+    # Full uri of the page being browsed
     def uri
       page.uri
     end
 
+    # Scraped attributes of this page. Attributes are extracted with the
+    # corresponding attributes blocks given in Storexplore::Dsl
     def attributes
       @attributes ||= scrap_attributes
     end
 
+    # Sub categories Storexplore::Walker, as matched by the corresponding
+    # categories selector in Storexplore::Dsl
     def categories
       categories_digger.sub_walkers(page, self)
     end
 
+    # Sub items Storexplore::Walker, as matched by the corresponding
+    # categories selector in Storexplore::Dsl
     def items
       items_digger.sub_walkers(page, self)
     end
 
+    # String representation with uri and index among siblings.
     def to_s
       "#{self.class} ##{index} @#{uri}"
     end
 
+    # Extended multiline string representation with parents.
     def genealogy
       genealogy_prefix + to_s
     end

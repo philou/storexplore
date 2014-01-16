@@ -2,7 +2,7 @@
 #
 # dummy_data.rb
 #
-# Copyright (c) 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2012-2013 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,12 +22,16 @@
 module Storexplore
   module Testing
 
+    # Dummy data generator for Storexplore::Testing::DummyStore store
+    # generation
     class DummyData
 
+      # A new unique name.
       def self.name(kind)
         "#{kind.capitalize}-#{new_int}"
       end
 
+      # A new unique set of standard store item attributes.
       def self.attributes(name, options)
         {
           name: name,

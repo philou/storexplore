@@ -2,7 +2,7 @@
 #
 # configuration.rb
 #
-# Copyright (c) 2010, 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2013-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,12 @@
 require 'logger'
 
 module Storexplore
+
+  # Extra facilities to ease testing custom store APIs.
   module Testing
 
+    # Call this with a block to initialize Storexplore::Testing. The given
+    # block receives the Storexplore::Testing::Configuration as argument.
     def self.config
       @config ||= Configuration.new
       yield @config if block_given?
@@ -37,18 +41,24 @@ module Storexplore
         @logger.level = Logger::INFO
       end
 
-      # Generation directory where the dummy stores will be generated.
-      # A sub folder with name DummyStore::NAME will be created there to hold all generated dummy stores,
-      # the content of this directory will be deleted when the DummyStore.wipeout method is called
+      # Sets the generation directory where the dummy stores will be generated.
+      # A sub folder with name Storexplore::DummyStoreConstants#NAME will be
+      # created there to holdvall generated dummy stores, the content of this
+      # directory will be deleted when the Storexplore::DummyStore#wipeout
+      # method is called.
+      # This setup is required to use Storexplore::Testing.
+      def dummy_store_generation_dir=(generation_dir)
+        @generation_dir = generation_dir
+      end
+      # See #dummy_store_generation_dir=.
+      # Throws if no generation dir was previously set
       def dummy_store_generation_dir
         raise StandardError.new('You need to configure a dummy store generation directory with Storexplore::Testing.config.dummy_store_generation_dir=') if @generation_dir.nil?
         @generation_dir
       end
-      def dummy_store_generation_dir=(generation_dir)
-        @generation_dir = generation_dir
-      end
 
-      # Logger for custom test messages
+      # Logger for custom test messages. By default, it logs to STDOUT with
+      # info level.
       attr_accessor :logger
 
     end

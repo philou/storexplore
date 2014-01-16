@@ -2,7 +2,7 @@
 #
 # uri_utils.rb
 #
-# Copyright (c) 2011, 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2011-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public

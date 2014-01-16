@@ -2,7 +2,7 @@
 #
 # dsl_spec.rb
 #
-# Copyright (C) 2012, 2013, 2014 by Philippe Bourgau. All rights reserved.
+# Copyright (C) 2012-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public

@@ -2,7 +2,7 @@
 #
 # dummy_store_generator.rb
 #
-# Copyright (c) 2012, 2013 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2012-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,27 +22,41 @@
 module Storexplore
   module Testing
 
+    # Dummy store generation one liner. Forwards chains of method calls to a
+    # collections of Storexplore::Testing::DummyStore instances.
     class DummyStoreGenerator
+
+      # * pages : collection of Storexplore::Testing::DummyStore instances to
+      #   which calls will be forwarded
+      # * count : number of children (categories or items) that will be added
+      #   with every generation call
       def initialize(pages, count = 1)
         @pages = pages
         @count = count
       end
 
+      # Changes the number of generated children
       def and(count)
         @count = count
         self
       end
 
+      # Generates @count categories on all @pages
       def categories
         dispatch(:category)
       end
+      # See #categories
       alias_method :category, :categories
 
+      # Generates @count items with attributes on all @pages
       def items
         dispatch(:item).attributes
       end
+      # See #items
       alias_method :item, :items
 
+      # generates attributes for all @pages. Explicit attributes can be
+      # specified
       def attributes(options = {})
         @pages.map do |page|
           attributes = DummyData.attributes(page.name, options)
