@@ -25,9 +25,8 @@ module Storexplore
   module Testing
 
     describe "DummyStoreApi", slow: true do
-      include ApiSpecMacros
-
-      it_should_behave_like_any_store_items_api
+      include_context "a scrapped store"
+      it_should_behave_like "an API"
 
       DEFAULT_STORE_NAME = "www.spec-store.com"
 
@@ -35,7 +34,8 @@ module Storexplore
         DummyStore.wipe_out_store(store_name)
         @store_generator = DummyStore.open(store_name)
         @store_generator.generate(3).categories.and(3).categories.and(item_count).items
-        @store = new_store(store_name)
+
+        new_store(store_name)
       end
 
       def new_store(store_name = DEFAULT_STORE_NAME)
@@ -74,7 +74,7 @@ module Storexplore
       end
 
       def memory_usage_for_items(item_count, runs)
-        generate_store(store_name = "www.spec-perf-store.com", item_count)
+        self.store = generate_store(store_name = "www.spec-perf-store.com", item_count)
         data = runs.times.map do
           memory_peak_of do
             walk_store(store_name)
@@ -126,7 +126,7 @@ module Storexplore
         @title = store_node.title
         @attributes = store_node.attributes
 
-        # No GC is explicitly done, because:
+        # No GC is not explicitly done, because:
         #  - large inputs forces it anyway
         #  - it greatly slows tests
         #  - GCing should not change the complexity of the system
