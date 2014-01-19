@@ -22,61 +22,6 @@
 module Storexplore
   module Testing
 
-    shared_context "a scrapped store" do
-
-      before :all do
-        @range = 0..1
-
-        self.store = generate_store
-        explore_store
-      end
-
-      def explore_store
-        @sample_categories = dig([store], :categories)
-        @all_sample_categories, @sample_items = dig_deep(@sample_categories)
-        @valid_sample_items = valid_items(@sample_items)
-        @sample_items_attributes = (valid_sample_items.map &:attributes).uniq
-        @parseable_categories_attributes = all_sample_categories.map do |category|
-          category.attributes rescue {}
-        end
-      end
-
-      attr_accessor :store, :sample_categories, :all_sample_categories, :sample_items, :valid_sample_items, :sample_items_attributes, :parseable_categories_attributes
-
-      def dig(categories, message)
-        categories.map { |cat| cat.send(message).to_a[@range] }.flatten
-      end
-
-      def dig_deep(categories)
-        all_categories = [categories]
-
-        while (items = dig(categories, :items)).empty?
-          categories = dig(categories, :categories)
-          all_categories << categories
-        end
-
-        [all_categories.flatten, items]
-      end
-
-      def valid_items(items)
-        result = []
-        sample_items.each do |item|
-          begin
-            item.attributes
-            result.push(item)
-          rescue BrowsingError => e
-            Testing.logger.debug e.message
-          end
-        end
-        result
-      end
-
-      def logger
-        Testing.config.logger
-      end
-
-    end
-
     shared_examples "an API" do
 
       it "should have many item categories" do

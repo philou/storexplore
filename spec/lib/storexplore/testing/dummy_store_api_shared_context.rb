@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 #
-# storexplore.rb
+# dummy_store_api_shared_context.rb
 #
-# Copyright (c) 2010-2014 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2011-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,13 +19,29 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require 'storexplore'
-require 'storexplore/testing/api_shared_context'
-require 'storexplore/testing/api_shared_examples'
-require 'storexplore/testing/configuration'
-require 'storexplore/testing/dummy_data'
-require 'storexplore/testing/dummy_store'
-require 'storexplore/testing/dummy_store_api'
-require 'storexplore/testing/dummy_store_generator'
-require 'storexplore/testing/matchers/have_unique_matcher'
-require 'storexplore/testing/matchers/mostly_matcher'
+require 'spec_helper'
+
+module Storexplore
+  module Testing
+
+    shared_context "a generated dummy store" do
+      def default_store_name
+        "www.spec-store.com"
+      end
+
+      def generate_store(store_name = default_store_name, item_count = 3)
+        DummyStore.wipe_out_store(store_name)
+        @store_generator = DummyStore.open(store_name)
+        @store_generator.generate(3).categories.and(3).categories.and(item_count).items
+
+        new_store(store_name)
+      end
+
+      def new_store(store_name = default_store_name)
+        Api.browse(DummyStore.uri(store_name))
+      end
+
+    end
+
+  end
+end
