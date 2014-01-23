@@ -1,8 +1,10 @@
 language: ruby
 rvm:
+  - ruby-head
+  - 2.1.0
   - 2.0.0
-# no lazy for enumerators in jruby 2.0
-#  - jruby-20mode
-# no rubynius working at the moment
-#  - rbx-20mode
+  - jruby-head
+  - jruby-21mode
+  - jruby-20mode
+  - rbx
 script: bundle exec rake
