@@ -19,11 +19,16 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
+require_relative 'dummy_store'
+require_relative 'dummy_data'
+
 module Storexplore
   module Testing
 
     # Dummy store generation one liner. Forwards chains of method calls to a
     # collections of Storexplore::Testing::DummyStore instances.
+    #
+    # This file can be required on its own
     class DummyStoreGenerator
 
       # * pages : collection of Storexplore::Testing::DummyStore instances to

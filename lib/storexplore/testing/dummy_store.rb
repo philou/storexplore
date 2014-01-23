@@ -20,6 +20,8 @@
 # MA 02110-1301  USA
 
 require "fileutils"
+require_relative "configuration"
+require_relative "dummy_store_constants"
 
 module Storexplore
   module Testing

@@ -148,6 +148,12 @@ describe "MyStoreApi" do
 end
 ```
 
+### Testing files to require
+
+* To only get the api definition for a previously generated dummy store, it is enough to require 'storexplore/testing/dummy_store_api'
+* To be able to generate and scrap dummy stores, it's needed to require 'storexplore/testing/dummy_store_generator'
+* To do all the previous and to use rspec utilities, require 'storexplore/testing'
+
 ## Contributing
 
 1. Fork it

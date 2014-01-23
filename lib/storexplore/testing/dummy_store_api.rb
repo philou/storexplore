@@ -25,8 +25,8 @@ module Storexplore
   module Testing
 
     # API definition for stores generated Storexplore::DummyStore
-    # This file can be included on its own, without storexplore/testing.rb and
-    # without the need for all the runtime testing dependencies (rspec, etc).
+    #
+    # This file can be required on its own
     Storexplore::Api.define DummyStoreConstants::NAME do
 
       categories 'a.category' do
