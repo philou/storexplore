@@ -1,17 +1,6 @@
 language: ruby
 rvm:
-  - ruby-head
-  - 2.1.0
+  - 2.1.1
   - 2.0.0
-  - jruby-head
-  - jruby-21mode
-  - jruby-20mode
 script: bundle exec rake
-matrix:
-  allow_failures:
-  - rvm: ruby-head
-  # no lazy for enumerators in jruby
-  - rvm: jruby-head
-  - rvm: jruby-21mode
-  - rvm: jruby-20mode
 
