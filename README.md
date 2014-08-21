@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/philou/storexplore.svg?branch=master)](https://travis-ci.org/philou/storexplore) [![Test Coverage](https://codeclimate.com/github/philou/storexplore/badges/coverage.svg)](https://codeclimate.com/github/philou/storexplore) [![Code Climate](https://codeclimate.com/github/philou/storexplore/badges/gpa.svg)](https://codeclimate.com/github/philou/storexplore)
+
 # Storexplore
 
 A declarative scrapping DSL that lets one define directory like apis to an online store
