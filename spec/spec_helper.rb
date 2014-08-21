@@ -23,6 +23,7 @@ require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 
 require 'fakeweb'
+require 'rspec/collection_matchers'
 require 'spec_combos'
 require 'storexplore'
 require 'storexplore/testing'
@@ -33,9 +34,12 @@ Storexplore::Testing.config do |config|
 end
 
 # Clean up fakeweb registry after every test
-FakeWeb.allow_net_connect = false
 RSpec.configure do |config|
+  config.before :each do
+    FakeWeb.allow_net_connect = false
+  end
   config.after(:each) do
     FakeWeb.clean_registry
+    FakeWeb.allow_net_connect = true
   end
 end
