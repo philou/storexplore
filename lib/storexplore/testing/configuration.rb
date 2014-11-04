@@ -39,6 +39,7 @@ module Storexplore
       def initialize
         @logger = Logger.new(STDOUT)
         @logger.level = Logger::INFO
+        @explore_store_items_timeout = 5*60
       end
 
       # Sets the generation directory where the dummy stores will be generated.
@@ -60,6 +61,10 @@ module Storexplore
       # Logger for custom test messages. By default, it logs to STDOUT with
       # info level.
       attr_accessor :logger
+
+      # Timeout for a the initial test exploration of the items of a store. By default,
+      # 5 minutes
+      attr_accessor :explore_store_items_timeout
 
     end
   end

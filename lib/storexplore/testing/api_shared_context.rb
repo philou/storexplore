@@ -19,18 +19,22 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
+require 'timeout'
+
 module Storexplore
   module Testing
 
     shared_context "a scrapped store" do
 
       before :all do
-        @range = 0..1
+        Timeout::timeout(Testing.config.explore_store_items_timeout) do
+          @range = 0..1
 
-        expect(self).to(respond_to(:generate_store), "You should implement generate_store to include the scrapped store shared context")
+          expect(self).to(respond_to(:generate_store), "You should implement generate_store to include the scrapped store shared context")
 
-        self.store = generate_store
-        explore_store
+          self.store = generate_store
+          explore_store
+        end
       end
 
       def explore_store
@@ -51,8 +55,10 @@ module Storexplore
 
       def dig_deep(categories)
         all_categories = [categories]
+        items = []
 
-        while (items = dig(categories, :items)).empty?
+        while not categories.empty? and items.empty?
+          items = dig(categories, :items)
           categories = dig(categories, :categories)
           all_categories << categories
         end
