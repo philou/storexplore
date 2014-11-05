@@ -20,5 +20,5 @@
 # MA 02110-1301  USA
 
 module Storexplore
-  VERSION = "0.3.0"
+  VERSION = "0.4.0"
 end
