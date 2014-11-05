@@ -19,6 +19,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
+require 'mechanize'
+
 module Storexplore
 
   # Main entry point to the library
@@ -37,7 +39,14 @@ module Storexplore
     # included in the url of the store.
     # Returns a Storexplore::Walker for the home page of the store
     def self.browse(store_url)
-      builder(store_url).new_walker(WalkerPage.open(store_url))
+      agent = Mechanize.new do |it|
+          # NOTE: by default Mechanize has infinite history, and causes memory leaks
+          #it.history.max_size = 0
+        end
+
+      builder = builder(store_url)
+      builder.configure_agent(agent)
+      builder.new_walker(WalkerPage.open(agent,store_url))
     end
 
     # Forgets the previously defined store API by its name. Mainly useful while

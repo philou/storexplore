@@ -19,8 +19,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require 'mechanize'
-
 module Storexplore
 
   # Wrapper around Mechanize::Page providing strict one liners to select
@@ -30,8 +28,8 @@ module Storexplore
 
     # A new lazy proxy on the page.
     # (Internal Usage)
-    def self.open(uri)
-      Getter.new(uri)
+    def self.open(agent, uri)
+      Getter.new(agent, uri)
     end
 
     # Uri of the page
@@ -99,7 +97,8 @@ module Storexplore
     class Getter
       attr_reader :uri
 
-      def initialize(uri)
+      def initialize(agent, uri)
+        @agent = agent
         @uri = uri
       end
       def get
@@ -113,12 +112,7 @@ module Storexplore
       private
 
       def get_page
-        agent = Mechanize.new do |it|
-          # NOTE: by default Mechanize has infinite history, and causes memory leaks
-          it.history.max_size = 0
-        end
-
-        WalkerPage.new(agent.get(@uri))
+        WalkerPage.new(@agent.get(@uri))
       end
     end
 

@@ -36,9 +36,18 @@ module Storexplore
     # Initializes a new instance with no special categories, items or
     # attributes definition. (Internal usage)
     def initialize
+      @configure_agent_block = lambda do |_| {} end
       @scrap_attributes_block = lambda do |_| {} end
       @categories_digger = NullDigger.new
       @items_digger = NullDigger.new
+    end
+
+    # Registers a block that can customize the Mechanize Agent that will be
+    # used throughout the the store digging. This can be useful to setup
+    # custom cookies for example. Ignored anywhere except on the top level
+    # store definition.
+    def agent(&block)
+      @configure_agent_block = block
     end
 
     # Registers the block to be used to extract attributes from a store page.
@@ -58,6 +67,13 @@ module Storexplore
     # Same as #categories, but for child items
     def items(selector, &block)
       @items_digger = Digger.new(selector, Dsl.walker_builder(&block))
+    end
+
+    # Initializes the mechanize agent with the given setup
+    # * agent : the mechanize agent that will be used throughout the walking
+    # (Internal usage)
+    def configure_agent(agent)
+      @configure_agent_block.call(agent)
     end
 
     # Initializes a new Storexplore::Walker instance based on specified custom

@@ -20,6 +20,7 @@
 # MA 02110-1301  USA
 
 require 'spec_helper'
+require 'mechanize'
 
 module Storexplore
 
@@ -27,12 +28,12 @@ module Storexplore
 
     before :each do
       @uri = URI.parse("file://" + File.expand_path(File.join(File.dirname(__FILE__), 'store_walker_page_spec_fixture.html')))
-      @page_getter = WalkerPage.open(@uri)
+      @page_getter = WalkerPage.open(Mechanize.new, @uri)
     end
 
     context "before actually getting the page" do
       it "nothing should throw if the uri is invalid" do
-        expect(lambda { WalkerPage.open("http://impossible.file.name") }).not_to raise_error
+        expect(lambda { WalkerPage.open(Mechanize.new, "http://impossible.file.name") }).not_to raise_error
       end
 
       it "knows the uri of the page" do

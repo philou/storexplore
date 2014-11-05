@@ -23,6 +23,12 @@ require "spec_helper"
 
 module Storexplore
 
+  class DslSpecAgent
+    class << self
+      attr_accessor :instance
+    end
+  end
+
   describe Dsl do
 
     def browse
@@ -34,6 +40,9 @@ module Storexplore
     end
 
     context 'a simple store' do
+
+      attr_accessor :actual_agent
+
       before :each do
         FakeWeb.register_uri(:get, "http://www.cats-surplus.com", content_type: 'text/html', body: <<-eos)
           <html>
@@ -72,6 +81,10 @@ module Storexplore
         FakeWeb.register_uri(:get, "http://www.cats-surplus.com/legal.html", content_type: 'text/html', body: "")
 
         Storexplore::Api.define 'cats' do
+          agent do |it|
+            it.history.max_size = 1
+            DslSpecAgent.instance = it
+          end
           items 'a.item' do
             attributes do
               { page: page,
@@ -139,6 +152,12 @@ module Storexplore
       it "items can have attributes" do
         expect(@walker.items.first.attributes[:this_is_the]).to eq :item
         expect(@walker.items.first.attributes[:page]).to be_instance_of(WalkerPage)
+      end
+
+      it "enables customization of the mechanize agent" do
+        @walker.items
+
+        expect(DslSpecAgent.instance.page.uri).to eq URI("http://www.cats-surplus.com")
       end
 
 
@@ -211,5 +230,6 @@ module Storexplore
         expect(@walker.attributes).to be_empty
       end
     end
+
   end
 end
