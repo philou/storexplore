@@ -2,7 +2,7 @@
 #
 # memory_usage_spec.rb
 #
-# Copyright (c) 2011-2014 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2011-2015 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -89,6 +89,7 @@ module Storexplore
       end
 
       def current_living_objects
+        GC.start
         object_counts = ObjectSpace.count_objects
         object_counts[:TOTAL] - object_counts[:FREE]
       end
