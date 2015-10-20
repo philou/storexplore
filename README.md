@@ -25,9 +25,6 @@ As a result of using storexplore for mes-courses, the scrapping code was split b
 
 ## Installation
 
-In order to be able to enumerate all items of a store in constant memory,
-Storexplore requires Matz Ruby 2.0 for its lazy enumerators.
-
 Add this line to your application's Gemfile:
 
     gem 'storexplore'
@@ -39,6 +36,9 @@ And then execute:
 Or install it yourself as:
 
     $ gem install storexplore
+
+In order to be able to enumerate all items of a store in constant memory,
+Storexplore requires ruby 2.0 for its lazy enumerators.
 
 ## Usage
 
