@@ -2,7 +2,26 @@
 
 # Storexplore
 
-A declarative scrapping DSL that lets one define directory like apis to an online store
+Transform online stores into APIs !
+
+## Why
+Once upon a time, I wanted to create online groceries with great user experience ! That's how I started [mes-courses.fr](https://github.com/philou/mes-courses). Unfortunately, most online groceries don't have APIs, so I resorted to scrapping. Scrapping comes with its (long) list of problems aswell !
+
+* Scrapping code is a mess
+* The scrapped html can change at any time
+* Scrappers are difficult to test
+
+Refactoring after refactoring, I managed to extract this libary  to define scrappers for an online grocery in a straightforward way (check [auchandirect-scrAPI](https://github.com/philou/auchandirect-scrAPI) for the actual scrapper I was using). A scrapper definition consists of :
+
+* a scrapper definition file
+* the selectors for the links
+* the selectors for the content you want to capture
+
+As a result of using storexplore for mes-courses, the scrapping code was split between the storexplore gem and my special scrapper definition :
+
+* This made the whole overall code cleaner
+* I could write simple and reliable tests
+* Most importantly, I could easily keep pace with the changes in the online store html
 
 ## Installation
 
