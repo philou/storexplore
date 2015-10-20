@@ -24,3 +24,6 @@ doc/
 *~
 *#
 .#*
+
+# vagrant files
+.vagrant
