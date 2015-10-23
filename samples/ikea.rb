@@ -1,3 +1,4 @@
+# coding: utf-8
 [![Build Status](https://travis-ci.org/philou/storexplore.svg?branch=master)](https://travis-ci.org/philou/storexplore) [![Test Coverage](https://codeclimate.com/github/philou/storexplore/badges/coverage.svg)](https://codeclimate.com/github/philou/storexplore) [![Code Climate](https://codeclimate.com/github/philou/storexplore/badges/gpa.svg)](https://codeclimate.com/github/philou/storexplore)
 
 # Storexplore
@@ -11,7 +12,7 @@ Once upon a time, I wanted to create online groceries with great user experience
 * The scrapped html can change at any time
 * Scrappers are difficult to test
 
-Refactoring after refactoring, I managed to extract this libary  to define scrappers for an online grocery in a straightforward way (check [auchandirect-scrAPI](https://github.com/philou/auchandirect-scrAPI) for the actual scrapper I was using). A scrapper definition consists of :
+Refactoring by refactoring, I extracted this libary which defines scrappers for any online store in a straightforward way (check [auchandirect-scrAPI](https://github.com/philou/auchandirect-scrAPI) for my real world usage). A scrapper definition consists of :
 
 * a scrapper definition file
 * the selectors for the links
@@ -119,8 +120,7 @@ Storexplore::Api.define 'ikea.com/us' do
 end
 ```
 
-This build a hierarchical API on the IKEA online store. This
-registers a new api definition that will be used to browse any store which
+This defines a hierarchical API on the IKEA store that will be used to browse any store which
 uri contains 'ikea.com/us'.
 
 Now here is how this API can be accessed to pretty print all its content:
@@ -152,7 +152,7 @@ Storexplore::Api.browse('http://www.ikea.com/us/en').categories.each do |categor
 end
 ```
 
-This sample can be found in samples/ikea.rb
+(This sample can be found in samples/ikea.rb)
 
 ### Testing
 
