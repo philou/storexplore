@@ -11,7 +11,7 @@ Once upon a time, I wanted to create online groceries with great user experience
 * The scrapped html can change at any time
 * Scrappers are difficult to test
 
-Refactoring after refactoring, I managed to extract this libary  to define scrappers for an online grocery in a straightforward way (check [auchandirect-scrAPI](https://github.com/philou/auchandirect-scrAPI) for the actual scrapper I was using). A scrapper definition consists of :
+Refactoring by refactoring, I extracted this libary which defines scrappers for any online store in a straightforward way (check [auchandirect-scrAPI](https://github.com/philou/auchandirect-scrAPI) for my real world usage). A scrapper definition consists of :
 
 * a scrapper definition file
 * the selectors for the links
@@ -119,8 +119,7 @@ Storexplore::Api.define 'ikea.com/us' do
 end
 ```
 
-This build a hierarchical API on the IKEA online store. This
-registers a new api definition that will be used to browse any store which
+This defines a hierarchical API on the IKEA store that will be used to browse any store which
 uri contains 'ikea.com/us'.
 
 Now here is how this API can be accessed to pretty print all its content:
@@ -152,16 +151,23 @@ Storexplore::Api.browse('http://www.ikea.com/us/en').categories.each do |categor
 end
 ```
 
-This sample can be found in samples/ikea.rb
+(This sample can be found in samples/ikea.rb)
 
-### Testing
+## Testing
 
-Storexplore ships with some dummy store generation utilities. Dummy stores can
-be generated to the file system using the Storexplore::Testing::DummyStore and
-Storexplore::Testing::DummyStoreGenerator classes. This is particularly useful
-while testing.
+NOTE : please keep in mind that these testing utilities have been extracted from my first real use case ([auchandirect-scrAPI](https://github.com/philou/auchandirect-scrAPI)) and might still rely on assumptions coming from there. Any help cleaning this up is welcome.
 
-To use it, add the following, to your spec_helper.rb for example :
+### Testing Code Relying On A Scrapped Thirdparty
+
+This can be quite a challenge. Storeexplore can help you with that :
+
+* it provides a customizable offline (disk) dummy store generator
+* it provides an API for this store
+* As long as your dummy store provides the same attributes than the real store, you can use it in your tests
+
+Dummy stores can be generated to the file system using the Storexplore::Testing::DummyStore and Storexplore::Testing::DummyStoreGenerator classes.
+
+To use it, add the following to your spec_helper.rb for example :
 
 ```ruby
 require 'storexplore/testing'
@@ -179,7 +185,7 @@ DummyStore.wipe_out_store(store_name)
 @store_generator.generate(3).categories.and(3).categories.and(item_count).items
 ```
 
-It is also possibe to add elements with explicit values :
+You can add custom elements with explicit values :
 
 ```ruby
 @store_generator.
@@ -193,10 +199,9 @@ Storexplore provides an api definition for dummy stores in
 'storexplore/testing/dummy_store_api'. It can be required independently if
 needed.
 
-### RSpec shared examples
+### Testing Your Own Scrapper
 
-Storexplore also ships with an rspec shared examples macro. It can be used for
-any custom store API definition.
+Storexplore also ships with an rspec shared examples macro. It guarantees basic scrapper well behaviour such as the presence of many categories, of item names and prices
 
 ```ruby
 require 'storexplore/testing'
@@ -211,7 +216,7 @@ describe "MyStoreApi" do
 end
 ```
 
-### Testing files to require
+### Summary Testing Files To Require
 
 * To only get the api definition for a previously generated dummy store, it is enough to require 'storexplore/testing/dummy_store_api'
 * To be able to generate and scrap dummy stores, it's needed to require 'storexplore/testing/dummy_store_generator'
