@@ -23,6 +23,10 @@ As a result of using storexplore for mes-courses, the scrapping code was split b
 * I could write simple and reliable tests
 * Most importantly, I could easily keep pace with the changes in the online store html
 
+## Tutorial
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O30xReGgdVU" frameborder="0" allowfullscreen></iframe>
+
 ## Installation
 
 Add this line to your application's Gemfile:
