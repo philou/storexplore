@@ -25,7 +25,7 @@ As a result of using storexplore for mes-courses, the scrapping code was split b
 
 ## Tutorial
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/O30xReGgdVU" frameborder="0" allowfullscreen></iframe>
+[![How to define an API on ikea.us in 10 minutes using storexplore](https://raw.githubusercontent.com/philou/storexplore/master/ikea.jpg)](http://www.youtube.com/watch?v=O30xReGgdVU)
 
 ## Installation
 
