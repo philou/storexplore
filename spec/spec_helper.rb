@@ -2,7 +2,7 @@
 #
 # spec_helper.rb
 #
-# Copyright (c) 2013-2014 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2013-2014, 2016 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,8 +19,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
+require 'simplecov'
+SimpleCov.start
 
 require 'fakeweb'
 require 'rspec/collection_matchers'
