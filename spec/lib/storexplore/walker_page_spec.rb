@@ -2,7 +2,7 @@
 #
 # walker_page_spec.rb
 #
-# Copyright (c) 2011-2014 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2011-2014, 2016 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -97,7 +97,7 @@ module Storexplore
       end
 
       it "links to other instances of WalkerPage" do
-        expect(@page.search_links("#myself").map { |link| link.get }).to all_ {be_instance_of(WalkerPage)}
+        expect(@page.search_links("#myself").map { |link| link.get }).to all(be_instance_of(WalkerPage))
       end
 
       it "knows the text of the links" do

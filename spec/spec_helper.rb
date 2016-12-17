@@ -24,7 +24,6 @@ SimpleCov.start
 
 require 'fakeweb'
 require 'rspec/collection_matchers'
-require 'spec_combos'
 require 'storexplore'
 require 'storexplore/testing'
 

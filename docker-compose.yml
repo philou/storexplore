@@ -1,0 +1,8 @@
+storexplore:
+  image: ruby:2.3.1
+  command: bash
+  working_dir: /usr/src/app
+  environment:
+    BUNDLE_PATH: 'vendor/bundle'
+  volumes:
+    - '.:/usr/src/app'

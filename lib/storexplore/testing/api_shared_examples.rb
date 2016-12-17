@@ -2,7 +2,7 @@
 #
 # api_shared_examples.rb
 #
-# Copyright (c) 2010-2014 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2010-2014, 2016 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -51,7 +51,7 @@ module Storexplore
       end
 
       it "should have items with a price" do
-        expect(sample_items_attributes).to all_ { have_key(:price) }
+        expect(sample_items_attributes).to all(have_key(:price))
       end
 
       it "should mostly have items with an image" do
@@ -63,7 +63,7 @@ module Storexplore
       end
 
       it "should have items with unique remote id" do
-        expect(sample_items_attributes).to all_ { have_unique(:remote_id).in(sample_items_attributes) }
+        expect(sample_items_attributes).to all(have_unique(:remote_id).in(sample_items_attributes))
       end
 
       it "should have items with unique uris" do
