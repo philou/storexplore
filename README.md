@@ -2,7 +2,7 @@
 
 # Storexplore
 
-Transform online stores into APIs !
+A ruby gem that simplifies the declaration of APIs on online stores through scraping.
 
 ## Why
 Once upon a time, I wanted to create online groceries with great user experience ! That's how I started [mes-courses.fr](https://github.com/philou/mes-courses). Unfortunately, most online groceries don't have APIs, so I resorted to scrapping. Scrapping comes with its (long) list of problems as well !
