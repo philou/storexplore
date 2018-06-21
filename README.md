@@ -5,13 +5,13 @@
 Transform online stores into APIs !
 
 ## Why
-Once upon a time, I wanted to create online groceries with great user experience ! That's how I started [mes-courses.fr](https://github.com/philou/mes-courses). Unfortunately, most online groceries don't have APIs, so I resorted to scrapping. Scrapping comes with its (long) list of problems aswell !
+Once upon a time, I wanted to create online groceries with great user experience ! That's how I started [mes-courses.fr](https://github.com/philou/mes-courses). Unfortunately, most online groceries don't have APIs, so I resorted to scrapping. Scrapping comes with its (long) list of problems as well !
 
 * Scrapping code is a mess
 * The scrapped html can change at any time
 * Scrappers are difficult to test
 
-Refactoring by refactoring, I extracted this libary which defines scrappers for any online store in a straightforward way (check [auchandirect-scrAPI](https://github.com/philou/auchandirect-scrAPI) for my real world usage). A scrapper definition consists of :
+Refactoring by refactoring, I extracted this library which defines scrappers for any online store in a straightforward way (check [auchandirect-scrAPI](https://github.com/philou/auchandirect-scrAPI) for my real world usage). A scrapper definition consists of :
 
 * a scrapper definition file
 * the selectors for the links
@@ -46,7 +46,7 @@ Storexplore requires ruby 2.0 for its lazy enumerators.
 
 ## Usage
 
-Online stores are typicaly organized as hierarchies. For example [Ikea (US)](http://www.ikea.com/us/en) is organized as follows :
+Online stores are typically organized as hierarchies. For example [Ikea (US)](http://www.ikea.com/us/en) is organized as follows :
 
     Ikea
     |-> Living room
@@ -59,7 +59,7 @@ Online stores are typicaly organized as hierarchies. For example [Ikea (US)](htt
     |   |   |-> Leather Sofas
     |   |   |-> ...
     |   |   |-> Armchairs
-    |   |-> TV & media funiture
+    |   |-> TV & media furniture
     |   |-> ...
     |   |-> Living room textiles & rugs
     |-> Bedroom
@@ -123,8 +123,7 @@ Storexplore::Api.define 'ikea.com/us' do
 end
 ```
 
-This defines a hierarchical API on the IKEA store that will be used to browse any store which
-uri contains 'ikea.com/us'.
+This defines a hierarchical API on the IKEA store that will be used to browse any store which URI contains `ikea.com/us`.
 
 Now here is how this API can be accessed to pretty print all its content:
 
@@ -163,7 +162,7 @@ NOTE : please keep in mind that these testing utilities have been extracted from
 
 ### Testing Code Relying On A Scrapped Thirdparty
 
-This can be quite a challenge. Storeexplore can help you with that :
+This can be quite a challenge. Storexplore can help you with that :
 
 * it provides a customizable offline (disk) dummy store generator
 * it provides an API for this store
@@ -205,7 +204,7 @@ needed.
 
 ### Testing Your Own Scrapper
 
-Storexplore also ships with an rspec shared examples macro. It guarantees basic scrapper well behaviour such as the presence of many categories, of item names and prices
+Storexplore also ships with an rspec shared examples macro. It guarantees basic scrapper well behavior such as the presence of many categories, of item names and prices
 
 ```ruby
 require 'storexplore/testing'
@@ -233,3 +232,9 @@ end
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Authors
+
+* [Philippe Bourgau](http://philippe.bourgau.net)
+
+<a href="https://github.com/philou/storexplore"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
